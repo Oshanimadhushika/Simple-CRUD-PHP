@@ -67,7 +67,18 @@ if (isset($_SESSION["user"])) {
 
         }
         ?>
-        <form action="registration.php" method="post">
+
+<div class="form-container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="image-column">
+                <img src="asserts/loginImg2.jpg" alt="Image" style="width: 100%;">
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-column">
+            <form action="registration.php" method="post">
             <div class="form-group">
                 <input type="text" class="form-control" name="user_name" placeholder="User Name:">
             </div>
@@ -87,6 +98,39 @@ if (isset($_SESSION["user"])) {
         <div>
         <div><p>Already Registered <a href="login.php">Login Here</a></p></div>
       </div>
+            </div>
+
+           
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     
+       
     </div>
 </body>
 </html>
