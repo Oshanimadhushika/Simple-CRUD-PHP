@@ -53,7 +53,7 @@ if (!isset($_SESSION["user"])) {
             </div>
             <div class="col-md-7 d-flex justify-content-end">
                 <a  href="customer_register.php"  class="custom-link">Customer Register</a>
-                <a class="custom-link">Details</a>
+                <a class="custom-link" href="customer_details.php">Details</a>
 
                 <a class="custom-link">Item Master</a>
                 <a href="logout.php" class="btn btn-warning font-weight-bold px-4 py-2 ">Logout</a>
