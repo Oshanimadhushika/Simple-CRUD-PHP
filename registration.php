@@ -40,12 +40,12 @@ if (isset($_SESSION["user"])) {
             array_push($errors,"Password does not match");
            }
            require_once "database.php";
-           $sql = "SELECT * FROM users WHERE branch = '$branch'";
-           $result = mysqli_query($conn, $sql);
-           $rowCount = mysqli_num_rows($result);
-           if ($rowCount>0) {
-            array_push($errors,"Branch already exists!");
-           }
+        //    $sql = "SELECT * FROM users WHERE branch = '$branch'";
+        //    $result = mysqli_query($conn, $sql);
+        //    $rowCount = mysqli_num_rows($result);
+        //    if ($rowCount>0) {
+        //     array_push($errors,"Branch already exists!");
+        //    }
            if (count($errors)>0) {
             foreach ($errors as  $error) {
                 echo "<div class='alert alert-danger'>$error</div>";
