@@ -59,7 +59,7 @@
                 $stmt->bind_param("sssssssssssssss", $datepicker, $registerNo, $name, $location, $address, $loyaltyBarcode, $teleMobile, $teleLand, $nic, $dob, $age, $occupation, $area, $familyDetails, $notes);
             
                 if ($stmt->execute()) {
-                    echo "<div class='alert alert-success'>Customer registered successfully.</div>";
+                    echo '<script>alert("Customer Register successfully.");</script>';
                     header("Location:customer_details.php");
                     exit();
 
@@ -68,7 +68,6 @@
                     echo "Error: " . $stmt->error;
                 }
             
-                // Close the prepared statement
                 $stmt->close();
             } else {
                 echo "Error: " . $conn->error;
@@ -138,11 +137,7 @@
                         <textarea class="form-control" id="address" name="address" rows="3"></textarea>
                     </div>
 
-                    <!-- <div class="mb-3">
-                <label for="area" class="form-label">Area:</label>
-                <select class="form-control" id="area" name="area">
-                </select>
-            </div> -->
+                  
                 </div>
             </div>
 

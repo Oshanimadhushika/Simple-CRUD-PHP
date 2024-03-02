@@ -88,8 +88,7 @@
                         echo "<td>" . $row["age"] . "</td>";
                         echo "<td>" . $row["occupation"] . "</td>";
                         echo "<td>" . $row["area"] . "</td>";
-                        // echo "<td>" . $row["familyDetails"] . "</td>";
-                        // echo "<td>" . $row["notes"] . "</td>";
+                        
                         echo "<td><a href='update_customer.php?id=" . $row["id"] . "' class='btn btn-primary'>Update</a></td>";
                         echo "<td><a href='delete_customer.php?id=" . $row["id"] . "' class='btn btn-danger' onclick='return confirm(\"Are you sure you want to delete this customer?\");'>Delete</a></td>";
                        

@@ -26,7 +26,7 @@ if (isset($_POST['update'])) {
     $updateStmt->bind_param("ssssssssssssssii", $updatedDate, $updatedRegisterNo, $updatedName, $updatedLocation, $updatedAddress, $updatedLoyaltyBarcode, $updatedTeleMobile, $updatedTeleLand, $updatedNIC, $updatedDOB, $updatedAge, $updatedOccupation, $updatedArea, $updatedFamilyDetails, $updatedNotes, $customer_id);
 
     if ($updateStmt->execute()) {
-        echo "Record updated successfully";
+        echo '<script>alert("Customer Detail Update successfully.");</script>';
         header("Location:customer_details.php");
         exit();
     } else {
