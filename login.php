@@ -129,7 +129,7 @@ $conn->close();
                         <input type="submit" value="Login" name="login" class="btn btn-primary" style="width=100%;">
                     </div>
                 </form>
-                <div>
+                <div class="mt-3">
                 <p>Not registered yet <a href="registration.php" class="text-purple mt-2">Register Here</a></p>
                 </div>
             </div>
