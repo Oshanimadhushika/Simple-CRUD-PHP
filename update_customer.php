@@ -1,9 +1,8 @@
 <?php
 require_once "database.php";
 
-// Move the form processing logic to the top
 if (isset($_POST['update'])) {
-    $customer_id = $_POST['customer_id']; // Add this line
+    $customer_id = $_POST['customer_id']; 
 
     $updatedDate = $_POST['datepicker'];
     $updatedRegisterNo = $_POST['registerNo'];
@@ -35,7 +34,6 @@ if (isset($_POST['update'])) {
 
     $updateStmt->close();
 } elseif (isset($_GET['id'])) {
-    // Display the form only when the ID is set
     $customer_id = $_GET['id'];
 
     $sql = "SELECT * FROM customers WHERE id = ?";

@@ -17,6 +17,9 @@ if (!isset($_SESSION["user"])) {
         integrity="sha512-Vh+0+KTDuX6+MuOYmth1VZy7sPnN0vBLCQ/k0vl4o6NDOD0vq5C+5IExxm/pxm+UEFy9RVMTqVp1bkTfCdP6aQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+
     <!-- <link rel="stylesheet" href="style.css"> -->
     <title> Dashboard</title>
 
@@ -27,12 +30,7 @@ if (!isset($_SESSION["user"])) {
             width: 100%;
         }
 
-        /* .container{
-    max-width: 90%;
-    margin:0 auto;
-    padding:20px;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-} */
+
         .form-group {
             margin-bottom: 30px;
         }
@@ -60,6 +58,138 @@ if (!isset($_SESSION["user"])) {
         .custom-col:hover {
             color: #007bff;
         }
+
+        .dashboard {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* .sidebar {
+            width: 250px;
+            background-color: #1A1A1D;
+            color: #D4D4D2;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            position: fixed;
+            height: 100%;
+        } */
+
+        /* .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            background-color: #E5E5E5;
+            flex: 1;
+        }
+
+        .sidebar a {
+            color: #D4D4D2;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #343537;
+        } */
+
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            /* background-color: #E5E5E5; */
+            flex: 1;
+            position: relative;
+            margin-bottom: 100px;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            left: 0;
+            top: 60px;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .logout-btn {
+            background-color: #DC3545;
+            border: none;
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            background-color: #C82333;
+        }
+
+        .list-unstyled {
+            padding: 10px;
+            list-style-type: none;
+            margin-bottom: 10px;
+        }
+
+        .list-unstyled li {
+            padding: 10px 0;
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        .list-unstyled li i {
+            margin-right: 10px;
+        }
+
+        .list-unstyled li a {
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+            transition: color 0.3s;
+            display: block;
+            /* padding: 10px; */
+        }
+
+        .list-unstyled li a:hover {
+            color: #007bff;
+        }
+
+        .sub-list {
+            display: none;
+        }
+
+        .sub-list.show {
+            display: block;
+        }
+
+        .content-container {
+            margin: 100px auto;
+            padding: 20px;
+            position: relative;
+            background-color: red;
+            width: 80%;
+        }
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+
+        .col-md-4 {
+            flex: 0 0 33.333333%;
+            max-width: 33.333333%;
+        }
+
+        .col-md-8 {
+            flex: 0 0 66.666667%;
+            max-width: 66.666667%;
+        }
     </style>
 </head>
 
@@ -70,139 +200,114 @@ if (!isset($_SESSION["user"])) {
                 <h1>Welcome to the <span class="text-warning">Dashboard</span></h1>
                 <div id="content-container"></div>
             </div>
-            <div class="col-md-7 d-flex justify-content-end">
+
+            <!-- <div class="col-md-7 d-flex justify-content-end">
                 <a href="customer_register.php" class="custom-link">Customer Register</a>
                 <a class="custom-link" href="customer_details.php">Details</a>
 
                 <a class="custom-link">Item Master</a>
                 <a href="logout.php" class="btn btn-warning font-weight-bold px-4 py-2 ">Logout</a>
+            </div> -->
 
-            </div>
-        </div>
-
-        <div class="container mx-auto text-center ml-4" style="margin-top: 30px; margin-left: 20px;">
-            <div class="row gap-2 ">
-
-                <div class="col-md-4 shadow p-3 mb-5 mr-4 bg-white rounded ">
-                    <a href="itemMaster.php" class=" custom-col">
-                        <h3><i class="fas fa-cogs"></i> Item Master</h3>
-                    </a>
-                </div>
-
-                <div  class="col-md-4 shadow p-3 mb-5  bg-white rounded " >
-                <a href="customer_register.php" class=" custom-col">
-
-                    <h3><i class="fas fa-cogs"></i> Customer Register</h3>
-                </a>
-                </div>
-
-
-                <div class="col-md-3 shadow p-3 mb-5 bg-white rounded" >
-                    <h3><i class="fas fa-cogs"></i> Balance Bill</h3>
-                </div>
-
-            </div>
-
-
-            <div class="row gap-2 ">
-                <div class="col-md-4 shadow p-3 mb-5 bg-white rounded">
-                    <h3><i class="fas fa-cogs"></i> Good Received</h3>
-                </div>
-                <div class="col-md-4 shadow p-3 mb-5 bg-white rounded">
-                    <h3><i class="fas fa-cogs"></i> Prescription Invoice</h3>
-                </div>
-
-
-                <div class="col-md-3 shadow p-3 mb-5 bg-white rounded">
-                    <h3><i class="fas fa-cogs"></i> Other Sales</h3>
-                </div>
-
-            </div>
-
-
-            <div class="row gap-2">
-                <div class="col-md-4 shadow p-3 mb-5 bg-white rounded">
-                    <h3><i class="fas fa-cogs"></i> Visitors</h3>
-                </div>
-                <div class="col-md-4 shadow p-3 mb-5 bg-white rounded">
-                    <h3><i class="fas fa-cogs"></i> Stock Adjust</h3>
-                </div>
-
-
-                <div class="col-md-3 shadow p-3 mb-5 bg-white rounded">
-                    <h3><i class="fas fa-cogs"></i> Expanse</h3>
-                </div>
-
-            </div>
-
-
-            <div class="row gap-2 ">
-                <div class="col-md-4 shadow p-3 mb-5 bg-white rounded">
-                    <h3><i class="fas fa-cogs"></i> Job Status</h3>
-                </div>
-                <div class="col-md-4 shadow p-3 mb-5 bg-white rounded">
-                    <h3><i class="fas fa-cogs"></i> Claim Bills</h3>
-                </div>
-
-
-                <div class="col-md-3 shadow p-3 mb-5 bg-white rounded">
-                    <h3><i class="fas fa-cogs"></i> Return</h3>
-                </div>
-
-            </div>
-
-
-            <div class="row gap-2 ">
-                <div class="col-md-4 shadow p-3 mb-5 bg-white rounded">
-                    <h3><i class="fas fa-cogs"></i> Setting</h3>
-                </div>
-                <div class="col-md-4 shadow p-3 mb-5 bg-white rounded">
-                    <h3><i class="fas fa-cogs"></i>Bar Code</h3>
-                </div>
-
-
-                <div class="col-md-3 shadow p-3 mb-5 bg-white rounded">
-                    <h3><i class="fas fa-cogs"></i>Pen Backup </h3>
-                </div>
-
-            </div>
-
-            <div class="row gap-2">
-                <div class="col-md-4 shadow p-3 mb-5 bg-white rounded">
-                    <h3><i class="fas fa-cogs"></i>Reports</h3>
-                </div>
-                <div class="col-md-4 shadow p-3 mb-5 bg-white rounded">
-                    <h3><i class="fas fa-cogs"></i> LESSON Training</h3>
-                </div>
-
-
-                <div class="col-md-3 shadow p-3 mb-5 bg-white rounded">
-                    <h3><i class="fas fa-cogs"></i>Exit</h3>
-                </div>
-
-            </div>
         </div>
 
 
+
+        <div class="row">
+            <!-- Sidebar Column -->
+            <div class="col-md-4">
+                <div class="main-content">
+                    <div class="card">
+                        <ul class="list-unstyled">
+                            <li class="dropdown">
+                                <a href="#" id="adminDropdown">
+                                    <i class="fas fa-cogs"></i> Admin
+                                    <i class="fas fa-chevron-down dropdown-icon"></i>
+                                </a>
+                                <ul class="list-unstyled sub-list">
+                                    <li><a href="branch.php">Add Branch</a></li>
+                                    <li><a href="registration.php">Add Users</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="customer_register.php"><i class="fas fa-cogs"></i> Customer Register</a></li>
+                            <li><a href="itemMaster.php"><i class="fas fa-cogs"></i> Item Master</a></li>
+                            <li><a href="balance_bill.php"><i class="fas fa-cogs"></i> Balance Bill</a></li>
+                            <li><a href="good_received.php"><i class="fas fa-cogs"></i> Good Received</a></li>
+                            <li><a href="prescription_invoice.php"><i class="fas fa-cogs"></i> Prescription Invoice</a>
+                            </li>
+                            <li><a href="other_sales.php"><i class="fas fa-cogs"></i> Other Sales</a></li>
+                            <li><a href="visitors.php"><i class="fas fa-cogs"></i> Visitors</a></li>
+                            <li><a href="stock_adjust.php"><i class="fas fa-cogs"></i> Stock Adjust</a></li>
+                            <li><a href="expense.php"><i class="fas fa-cogs"></i> Expense</a></li>
+                            <li><a href="job_status.php"><i class="fas fa-cogs"></i> Job Status</a></li>
+                            <li><a href="claim_bills.php"><i class="fas fa-cogs"></i> Claim Bills</a></li>
+                            <li><a href="return.php"><i class="fas fa-cogs"></i> Return</a></li>
+                            <li><a href="setting.php"><i class="fas fa-cogs"></i> Setting</a></li>
+                            <li><a href="barcode.php"><i class="fas fa-cogs"></i> Bar Code</a></li>
+                            <li><a href="pen_backup.php"><i class="fas fa-cogs"></i> Pen Backup</a></li>
+                            <li><a href="reports.php"><i class="fas fa-cogs"></i> Reports</a></li>
+                            <li><a href="lesson_training.php"><i class="fas fa-cogs"></i> LESSON Training</a></li>
+                            <li><a href="exit.php"><i class="fas fa-cogs"></i> Exit</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content Column -->
+            <div class="col-md-8">
+                <div class="content-container" id="content-container">
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- <script>
-            loadContent('customer_register.php');
 
-            function loadContent(page) {
-                var contentContainer = document.getElementById('customer-Register-container');
-                var xhr = new XMLHttpRequest();
 
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState == 4 && xhr.status == 200) {
-                        contentContainer.innerHTML = xhr.responseText;
-                    }
-                };
 
-                xhr.open('GET', page, true);
-                xhr.send();
-            }
-        </script> -->
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-d7sMXVnI0PpLXRqJ4qOjxmF/j6tZ6tqWp5ysqO3F5e/ZzmI5gkd6j9YXa0FJ/7G3"
+        crossorigin="anonymous"></script>
+
+        <script>
+    $(document).ready(function () {
+        var adminDropdown = $('#adminDropdown');
+        var subList = adminDropdown.next();
+        var contentContainer = $('#content-container');
+
+        adminDropdown.on('click', function () {
+            subList.toggleClass('show');
+        });
+
+        // Load initial content
+        // loadContent('customer_register.php');
+
+        // Function to load content dynamically
+        function loadContent(page) {
+            $.ajax({
+                url: page,
+                type: 'GET',
+                dataType: 'html',
+                success: function (data) {
+                    contentContainer.html(data);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error loading content:', error);
+                }
+            });
+        }
+
+        // Handle sidebar item clicks
+        $('.list-unstyled li a').on('click', function (event) {
+            event.preventDefault();
+            var page = $(this).attr('href');
+            loadContent(page);
+        });
+    });
+</script>
+
+
 </body>
 
 </html>

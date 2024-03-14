@@ -1,9 +1,4 @@
-<?php
-session_start();
-if (isset($_SESSION["user"])) {
-    header("Location: index.php");
-}
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -81,9 +76,9 @@ if (isset($_SESSION["user"])) {
 
                 <div class="col-md-6">
 
-                    <div class="d-flex justify-content-end align-items-end mt-1">
+                    <!-- <div class="d-flex justify-content-end align-items-end mt-1">
                         <a href="branch.php" class=""><i class="fas fa-plus"></i> Add Branch</a>
-                    </div>
+                    </div> -->
 
                     <div class="form-column mt-3">
                         <form action="registration.php" method="post">

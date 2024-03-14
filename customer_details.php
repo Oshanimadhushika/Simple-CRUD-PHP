@@ -79,7 +79,7 @@
                         echo "<td>" . $row["registerNo"] . "</td>";
                         echo "<td>" . $row["name"] . "</td>";
                         echo "<td>" . $row["location"] . "</td>";
-                        echo "<td>" . $row["address"] . "</td>";
+                        echo "<td>" . $row["address1"] . "</td>";
                         echo "<td>" . $row["loyaltyBarcode"] . "</td>";
                         echo "<td>" . $row["teleMobile"] . "</td>";
                         echo "<td>" . $row["teleLand"] . "</td>";

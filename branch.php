@@ -1,10 +1,4 @@
-<?php
-session_start();
-if (isset($_SESSION["user"])) {
-    header("Location: index.php");
-    exit();
-}
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -76,10 +70,10 @@ if (isset($_SESSION["user"])) {
                                 <input type="submit" class="btn btn-primary" value="Submit" name="submit">
                             </div>
                         </form>
-                        <div class="mt-3">
+                        <!-- <div class="mt-3">
                             <p>Not registered yet <a href="registration.php" class="text-purple mt-2">Register Here</a>
                             </p>
-                        </div>
+                        </div> -->
                     </div>
 
 
