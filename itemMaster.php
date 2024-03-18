@@ -1,3 +1,10 @@
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,63 +43,84 @@
 <body>
     <div class="container">
 
-    <?php
+        <?php
 
-    if (isset($_POST["submit"])) {
-    $itemCode = $_POST["itemCode"];
-    $barcode = $_POST["barcode"];
-    $description = $_POST["description"];
-    $department = $_POST["department"];
-    $category = $_POST["category"];
-    $supplier = $_POST["supplier"];
-    $cost = $_POST["cost"];
-    $profit = $_POST["profit"];
-    $salesPrice = $_POST["salesPrice"];
-    $discountRs = $_POST["discountRs"];
-    $wholesale = $_POST["wholesale"];
-    $location = $_POST["location"];
-    $maxStockQty = $_POST["maxStockQty"];
-    $minStockQty = $_POST["minStockQty"];
+        if (isset($_POST["submit"])) {
+            $itemCode = $_POST["itemCode"];
+            $barcode = $_POST["barcode"];
+            $description = $_POST["description"];
+            $department = $_POST["department"];
+            $category = $_POST["category"];
+            $supplier = $_POST["supplier"];
+            $cost = $_POST["cost"];
+            $profit = $_POST["profit"];
+            $salesPrice = $_POST["salesPrice"];
+            $discountRs = $_POST["discountRs"];
+            $wholesale = $_POST["wholesale"];
+            $location = $_POST["location"];
+            $maxStockQty = $_POST["maxStockQty"];
+            $minStockQty = $_POST["minStockQty"];
 
-    $errors = array();
+            $errors = array();
 
-    if (empty($itemCode) || empty($description) || empty($department) || empty($cost) || empty($salesPrice)) {
-        array_push($errors, "All fields are required");
-    }
+            if (empty($itemCode) || empty($description) || empty($department) || empty($cost) || empty($salesPrice)) {
+                array_push($errors, "All fields are required");
+            }
 
-    
 
-   
-     require_once "database.php";
-     $sql = "INSERT INTO item (item_code, barcode, description, department, category, supplier, cost, profit, sale_price, discount, wholesale, location, max_qty, min_qty) 
+
+
+            require_once "database.php";
+            $sql = "INSERT INTO item (item_code, barcode, description, department, category, supplier, cost, profit, sale_price, discount, wholesale, location, max_qty, min_qty) 
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-     $stmt = mysqli_stmt_init($conn);
-     $prepareStmt = mysqli_stmt_prepare($stmt, $sql);
-     if ($stmt) {
-         $stmt->bind_param("ssssssssssssss", $itemCode, $barcode, $description, $department, $category, $supplier, $cost, $profit, $salesPrice, $discountRs, $wholesale, $location, $maxStockQty, $minStockQty);
-         if ($stmt->execute()) {
-             echo '<script>alert("Item added successfully.");</script>';
-        } else {
-            echo "Error: " . $stmt->error;
+            $stmt = mysqli_stmt_init($conn);
+            $prepareStmt = mysqli_stmt_prepare($stmt, $sql);
+            if ($stmt) {
+                $stmt->bind_param("ssssssssssssss", $itemCode, $barcode, $description, $department, $category, $supplier, $cost, $profit, $salesPrice, $discountRs, $wholesale, $location, $maxStockQty, $minStockQty);
+                if ($stmt->execute()) {
+                    echo '<script>alert("Item added successfully.");</script>';
+                } else {
+                    echo "Error: " . $stmt->error;
+                }
+                $stmt->close();
+            } else {
+                echo "Error: " . $conn->error;
+            }
+
         }
-        $stmt->close();
-     } else {
-        echo "Error: " . $conn->error;
-     }
-
-}
-
-?>
 
 
 
 
 
+        require_once "database.php";
+
+        $sql_department = "SELECT description FROM department";
+        $result_department = mysqli_query($conn, $sql_department);
+        $departments = mysqli_fetch_all($result_department, MYSQLI_ASSOC);
+
+        $sql_category = "SELECT description FROM category";
+        $result_category = mysqli_query($conn, $sql_category);
+        $categories = mysqli_fetch_all($result_category, MYSQLI_ASSOC);
+
+        $sql_supplier = "SELECT name FROM supplier";
+        $result_supplier = mysqli_query($conn, $sql_supplier);
+        $suppliers = mysqli_fetch_all($result_supplier, MYSQLI_ASSOC);
+
+        mysqli_close($conn);
+
+        ?>
 
 
 
-<div class="row mb-2">
-           
+
+
+
+
+
+
+        <div class="row mb-2">
+
             <div class="col-md-6">
                 <h3>Item <span class="text-warning">Master</span></h3>
             </div>
@@ -102,30 +130,31 @@
             </div>
         </div>
 
-<!-- ======================================================================================================== -->
-<form id="itemMasterForm" action="itemMaster.php" method="post">
+        <!-- ======================================================================================================== -->
+        <form id="itemMasterForm" action="itemMaster.php" method="post">
             <div class="row mt-4">
                 <div class="col-md-4">
-                <div class="mb-3">
-                <label for="itemCode" class="form-label">Item Code:</label>
-                <input type="text" class="form-control" id="itemCode" name="itemCode" required>
-            </div>
+                    <div class="mb-3">
+                        <label for="itemCode" class="form-label">Item Code:</label>
+                        <input type="text" class="form-control" id="itemCode" name="itemCode" required>
+                    </div>
                 </div>
-               
+
 
 
                 <div class="col-md-4">
-                <div class="mb-3">
-                <label for="barcode" class="form-label">Barcode:</label>
-                <input type="text" class="form-control" id="barcode" name="barcode">
-            </div>
+                    <div class="mb-3">
+                        <label for="barcode" class="form-label">Barcode:</label>
+                        <input type="text" class="form-control" id="barcode" name="barcode">
+                    </div>
                 </div>
 
                 <div class="col-md-4">
-                <div class="mb-3">
-                <label for="description" class="form-label">Description:</label>
-                <input type="text" class="form-control" id="description" name="description" required>
-            </div>  </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description:</label>
+                        <input type="text" class="form-control" id="description" name="description" required>
+                    </div>
+                </div>
 
 
 
@@ -135,45 +164,57 @@
 
                 <div class="col-md-4">
 
-                <div class="mb-3">
-                <label for="department" class="form-label">Department:</label>
-                <select class="form-select" id="department" name="department">
-                    <option value="dept1">Department 1</option>
-                    <option value="dept2">Department 2</option>
-                    <!-- Add more options as needed -->
-                </select>
-            </div>
-
-
-                </div>
-                <div class="col-md-4">
-
-                <div class="mb-3">
-                <label for="category" class="form-label">Category:</label>
-                <select class="form-select" id="category" name="category">
-                    <option value="cat1">category 1</option>
-                    <option value="catt2">category 2</option>
-                    <!-- Add more options as needed -->
-                </select>
-            </div>
-
-
-
-
-
+                    <div class="mb-3">
+                        <label for="department" class="form-label">Department:</label>
+                        <select class="form-select" id="department" name="department">
+                            <?php foreach ($departments as $department): ?>
+                                <option value="<?= $department['description'] ?>">
+                                    <?= $department['description'] ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
 
                 </div>
 
+
+
                 <div class="col-md-4">
 
-                <div class="mb-3">
-                <label for="supplier" class="form-label">Supplier:</label>
-                <select class="form-select" id="supplier" name="supplier">
-                    <option value="supplier1">Supplier 1</option>
-                    <option value="supplier2">Supplier 2</option>
-                    <!-- Add more options as needed -->
-                </select>
-            </div>
+
+
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Category:</label>
+                        <select class="form-select" id="category" name="category">
+                            <?php foreach ($categories as $category): ?>
+                                <option value="<?= $category['description'] ?>">
+                                    <?= $category['description'] ?>
+                                </option>
+                            <?php endforeach; ?>
+
+                        </select>
+                    </div>
+
+
+
+
+
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <div class="mb-3">
+                        <label for="supplier" class="form-label">Supplier:</label>
+                        <select class="form-select" id="supplier" name="supplier">
+                            <?php foreach ($suppliers as $supplier): ?>
+                                <option value="<?= $supplier['name'] ?>">
+                                    <?= $supplier['name'] ?>
+                                </option>
+                            <?php endforeach; ?>
+
+                        </select>
+                    </div>
 
                 </div>
 
@@ -181,89 +222,88 @@
             </div>
 
             <div class="row mt-2">
+
+
+
+
+
                 <div class="col-md-3">
-                <div class="mb-3">
-                <label for="cost" class="form-label">Cost:</label>
-                <input type="number" class="form-control" id="cost" name="cost">
-            </div>
+                    <div class="mb-3">
+                        <label for="cost" class="form-label">Cost:</label>
+                        <input type="number" class="form-control" id="cost" name="cost">
+                    </div>
 
 
 
                 </div>
 
                 <div class="col-md-3">
-                <div class="mb-3">
-                <label for="profit" class="form-label">Profit:</label>
-                <input type="number"  class="form-control" id="profit" name="profit">
-            </div>
+                    <div class="mb-3">
+                        <label for="profit" class="form-label">Profit:</label>
+                        <input type="number" class="form-control" id="profit" name="profit">
+                    </div>
 
                 </div>
 
                 <!-- ======================================================== -->
                 <div class="col-md-3">
-                <div class="mb-3">
-                <label for="salesPrice" class="form-label">Sales Price (Cash):</label>
-                <input type="text" class="form-control" id="salesPrice" name="salesPrice">
-            </div>
+                    <div class="mb-3">
+                        <label for="salesPrice" class="form-label">Sales Price (Cash):</label>
+                        <input type="text" class="form-control" id="salesPrice" name="salesPrice">
+                    </div>
 
                 </div>
 
                 <!-- ================================================================== -->
                 <div class="col-md-3">
-                <div class="mb-3">
-                <label for="discountRs" class="form-label">Discount Rs:</label>
-                <input type="text" class="form-control" id="discountRs" name="discountRs">
-            </div>
+                    <div class="mb-3">
+                        <label for="discountRs" class="form-label">Discount Rs:</label>
+                        <input type="text" class="form-control" id="discountRs" name="discountRs">
+                    </div>
 
                 </div>
             </div>
 
             <div class="row mt-2">
                 <div class="col-md-3">
-                <div class="mb-3">
-                <label for="wholesale" class="form-label">Wholesale:</label>
-                <input type="text" class="form-control" id="wholesale" name="wholesale">
-            </div>
+                    <div class="mb-3">
+                        <label for="wholesale" class="form-label">Wholesale:</label>
+                        <input type="text" class="form-control" id="wholesale" name="wholesale">
+                    </div>
 
 
                 </div>
 
                 <div class="col-md-3">
-                <div class="mb-3">
-                <label for="location" class="form-label">Location:</label>
-                <input type="text" class="form-control" id="location" name="location">
-            </div>
+                    <div class="mb-3">
+                        <label for="location" class="form-label">Location:</label>
+                        <input type="text" class="form-control" id="location" name="location">
+                    </div>
 
 
 
                 </div>
 
                 <div class="col-md-3">
-                <div class="mb-3">
-                <label for="maxStockQty" class="form-label">Maximum Stock Quantity:</label>
-                <input type="text" class="form-control" id="maxStockQty" name="maxStockQty">
-            </div>
+                    <div class="mb-3">
+                        <label for="maxStockQty" class="form-label">Maximum Stock Quantity:</label>
+                        <input type="text" class="form-control" id="maxStockQty" name="maxStockQty">
+                    </div>
 
 
                 </div>
 
                 <div class="col-md-3">
 
-                <div class="mb-3">
-                <label for="minStockQty" class="form-label">Minimum Stock Quantity:</label>
-                <input type="text" class="form-control" id="minStockQty" name="minStockQty">
+                    <div class="mb-3">
+                        <label for="minStockQty" class="form-label">Minimum Stock Quantity:</label>
+                        <input type="text" class="form-control" id="minStockQty" name="minStockQty">
+                    </div>
+                </div>
             </div>
-            </div>
-            </div>
-
-            
-
-
-           
 
 
 
-           
 
             <div class="row mt-2">
                 <div class="col-md-12">
@@ -279,7 +319,7 @@
                 </div>
             </div>
         </form>
-<!-- ======================================================================================================== -->
+        <!-- ======================================================================================================== -->
 
 
 
@@ -304,7 +344,7 @@
 
 
 
-       
+
 
 
 
