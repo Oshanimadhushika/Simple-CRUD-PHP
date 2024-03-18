@@ -1,296 +1,185 @@
-<?php
-session_start();
-if (!isset($_SESSION["user"])) {
-    header("Location: login.php");
-}
-?>
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
-        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-        integrity="sha512-Vh+0+KTDuX6+MuOYmth1VZy7sPnN0vBLCQ/k0vl4o6NDOD0vq5C+5IExxm/pxm+UEFy9RVMTqVp1bkTfCdP6aQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-
-    <!-- <link rel="stylesheet" href="style.css"> -->
-    <title> Dashboard</title>
-
-
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
     <style>
-        body {
-            padding: 10px;
-            width: 100%;
-        }
 
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
-        .form-group {
-            margin-bottom: 30px;
-        }
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
 
-        .custom-link {
-            text-decoration: none;
-            color: #d4a017;
-            font-weight: bold;
-            transition: color 0.3s;
-            padding-right: 5%;
-        }
+body{
+  min-height: 100vh;
+  background: url(bg.jpg)no-repeat;
+  background-size: cover;
+  background-position: center;
+}
 
-        .custom-link:hover {
-            color: #007bff;
-        }
+.side-bar{
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  width: 290px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: -100%;
+  overflow-y: auto;
+  transition: 0.6s ease;
+  transition-property: left;
+}
 
-        .custom-col {
-            text-decoration: none;
-            color: black;
-            font-weight: bold;
-            transition: color 0.3s;
-            padding-right: 5%;
-        }
+.side-bar.active{
+  left: 0;
+}
 
-        .custom-col:hover {
-            color: #007bff;
-        }
+.side-bar .menu{
+  width: 100%;
+  margin-top: 80px;
+}
 
-        .dashboard {
-            display: flex;
-            height: 100vh;
-        }
+.side-bar .menu .item{
+  position: relative;
+  cursor: pointer;
+}
 
-        /* .sidebar {
-            width: 250px;
-            background-color: #1A1A1D;
-            color: #D4D4D2;
-            padding: 20px;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            position: fixed;
-            height: 100%;
-        } */
+.side-bar .menu .item  {
+  color: #000;
+  font-size: 14px; 
+  text-decoration: none;
+  display: block;
+  padding: 8px 20px;
+  line-height: 40px; 
+}
 
-        /* .main-content {
-            margin-left: 250px;
-            padding: 20px;
-            background-color: #E5E5E5;
-            flex: 1;
-        }
+.side-bar .menu .item a{
+  color: #000;
+  font-size: 16px;
+  text-decoration: none;
+  display: block;
+  padding: 5px 30px;
+  line-height: 60px;
+}
 
-        .sidebar a {
-            color: #D4D4D2;
-            text-decoration: none;
-            display: block;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
+.side-bar .menu .item a:hover{
+  background: #8621F8;
+  transition: 0.3s ease;
+}
 
-        .sidebar a:hover {
-            background-color: #343537;
-        } */
+.side-bar .menu .item i{
+  margin-right: 15px;
+}
 
-        .main-content {
-            margin-left: 250px;
-            padding: 20px;
-            /* background-color: #E5E5E5; */
-            flex: 1;
-            position: relative;
-            margin-bottom: 100px;
-        }
+.side-bar .menu .item a .dropdown{
+  position: absolute;
+  right: 0;
+  margin: 20px;
+  transition: 0.3s ease;
+}
 
-        .card {
-            background-color: #fff;
-            border-radius: 5px;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            left: 0;
-            top: 60px;
-            height: 100%;
-            overflow-y: auto;
-        }
+.side-bar .menu .item .sub-menu{
+  background: rgba(255, 255, 255, 0.1);
+  display: none;
+}
 
-        .logout-btn {
-            background-color: #DC3545;
-            border: none;
-            color: #fff;
-            padding: 8px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+.side-bar .menu .item .sub-menu a{
+  padding-left: 80px;
+}
 
-        .logout-btn:hover {
-            background-color: #C82333;
-        }
+.rotate{
+  transform: rotate(90deg);
+}
 
-        .list-unstyled {
-            padding: 10px;
-            list-style-type: none;
-            margin-bottom: 10px;
-        }
+#content-container {
+        display: absolute;
+        justify-content: center;
+        align-items: center;
+        /* height: 100%; */
+        text-align: center;
+        /* left: 200px; */
+    }
 
-        .list-unstyled li {
-            padding: 10px 0;
-            display: flex;
-            align-items: center;
-            font-weight: bold;
-        }
-
-        .list-unstyled li i {
-            margin-right: 10px;
-        }
-
-        .list-unstyled li a {
-            text-decoration: none;
-            color: black;
-            font-weight: bold;
-            transition: color 0.3s;
-            display: block;
-            /* padding: 10px; */
-        }
-
-        .list-unstyled li a:hover {
-            color: #007bff;
-        }
-
-        .sub-list {
-            display: none;
-        }
-
-        .sub-list.show {
-            display: block;
-        }
-
-        .content-container {
-            margin: 100px auto;
-            padding: 20px;
-            position: relative;
-            background-color: red;
-            width: 80%;
-        }
-        .row {
-            display: flex;
-            flex-wrap: wrap;
-        }
-
-
-        .col-md-4 {
-            flex: 0 0 33.333333%;
-            max-width: 33.333333%;
-        }
-
-        .col-md-8 {
-            flex: 0 0 66.666667%;
-            max-width: 66.666667%;
-        }
     </style>
-</head>
+  </head>
+  <body>
 
-<body>
-    <div class="container-dash" style="width: 95%;">
-        <div class="row">
-            <div class="col-md-5">
+    <div class="menu-btn">
+      <i class="fas fa-bars"></i>
+    </div>
+    <div class="side-bar">
+      <div class="close-btn">
+        <i class="fas fa-times"></i>
+      </div>
+      <div class="menu">
+        <div class="item"><a href="index.php"><i class="fas fa-desktop"></i>Dashboard</a></div>
+        <div class="item">
+          <a class="sub-btn"><i class="fas fa-table"></i>Admin<i class="fas fa-angle-right dropdown"></i></a>
+          <div class="sub-menu">
+            <a href="branch.php" class="sub-item">Add Branch</a>
+            <a href="registration.php" class="sub-item">Add User</a>
+          </div>
+        </div>
+        <div class="item"><a href="customer_register.php"><i class="fas fa-th"></i>Customer Register</a></div>
+        <div class="item"><a href="itemMaster.php"><i class="fa fa-cart-arrow-down"></i>Item Master</a></div>
+
+        <div class="item">
+          <a class="sub-btn"><i class="fas fa-cogs"></i>Settings<i class="fas fa-angle-right dropdown"></i></a>
+          <div class="sub-menu">
+            <a href="category.php" class="sub-item">Category </a>
+            <a href="department.php" class="sub-item">Department </a>
+            <a href="supplier.php" class="sub-item">Supplier</a>
+
+          </div>
+        </div>
+        <div class="item"><a href="logout.php"><i class="fas fa-info-circle"></i>Exit</a></div>
+      </div>
+    </div>
+    <section class="main">
+    <div class="row justify-content-center">
+            <div class="col-md-12">
                 <h1>Welcome to the <span class="text-warning">Dashboard</span></h1>
                 <div id="content-container"></div>
             </div>
-
-            <!-- <div class="col-md-7 d-flex justify-content-end">
-                <a href="customer_register.php" class="custom-link">Customer Register</a>
-                <a class="custom-link" href="customer_details.php">Details</a>
-
-                <a class="custom-link">Item Master</a>
-                <a href="logout.php" class="btn btn-warning font-weight-bold px-4 py-2 ">Logout</a>
-            </div> -->
-
-        </div>
-
-
-
-        <div class="row">
-            <!-- Sidebar Column -->
-            <div class="col-md-4">
-                <div class="main-content">
-                    <div class="card">
-                        <ul class="list-unstyled">
-                            <li class="dropdown">
-                                <a href="#" id="adminDropdown">
-                                    <i class="fas fa-cogs"></i> Admin
-                                    <i class="fas fa-chevron-down dropdown-icon"></i>
-                                </a>
-                                <ul class="list-unstyled sub-list">
-                                    <li><a href="branch.php">Add Branch</a></li>
-                                    <li><a href="registration.php">Add Users</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="customer_register.php"><i class="fas fa-cogs"></i> Customer Register</a></li>
-                            <li><a href="itemMaster.php"><i class="fas fa-cogs"></i> Item Master</a></li>
-                            <li><a href="balance_bill.php"><i class="fas fa-cogs"></i> Balance Bill</a></li>
-                            <li><a href="good_received.php"><i class="fas fa-cogs"></i> Good Received</a></li>
-                            <li><a href="prescription_invoice.php"><i class="fas fa-cogs"></i> Prescription Invoice</a>
-                            </li>
-                            <li><a href="other_sales.php"><i class="fas fa-cogs"></i> Other Sales</a></li>
-                            <li><a href="visitors.php"><i class="fas fa-cogs"></i> Visitors</a></li>
-                            <li><a href="stock_adjust.php"><i class="fas fa-cogs"></i> Stock Adjust</a></li>
-                            <li><a href="expense.php"><i class="fas fa-cogs"></i> Expense</a></li>
-                            <li><a href="job_status.php"><i class="fas fa-cogs"></i> Job Status</a></li>
-                            <li><a href="claim_bills.php"><i class="fas fa-cogs"></i> Claim Bills</a></li>
-                            <li><a href="return.php"><i class="fas fa-cogs"></i> Return</a></li>
-                            <li><a href="setting.php"><i class="fas fa-cogs"></i> Setting</a></li>
-                            <li><a href="barcode.php"><i class="fas fa-cogs"></i> Bar Code</a></li>
-                            <li><a href="pen_backup.php"><i class="fas fa-cogs"></i> Pen Backup</a></li>
-                            <li><a href="reports.php"><i class="fas fa-cogs"></i> Reports</a></li>
-                            <li><a href="lesson_training.php"><i class="fas fa-cogs"></i> LESSON Training</a></li>
-                            <li><a href="exit.php"><i class="fas fa-cogs"></i> Exit</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Main Content Column -->
-            <div class="col-md-8">
-                <div class="content-container" id="content-container">
-                </div>
-            </div>
-        </div>
     </div>
 
+    </section>
 
+    <script type="text/javascript">
+    $(document).ready(function(){
+      //jquery for toggle sub menus
+      $('.sub-btn').click(function(){
+        $(this).next('.sub-menu').slideToggle();
+        $(this).find('.dropdown').toggleClass('rotate');
+      });
 
+      //jquery for expand and collapse the sidebar
+      $('.menu-btn').click(function(){
+        $('.side-bar').addClass('active');
+        $('.menu-btn').css("visibility", "hidden");
+      });
 
+      $('.close-btn').click(function(){
+        $('.side-bar').removeClass('active');
+        $('.menu-btn').css("visibility", "visible");
+      });
 
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-d7sMXVnI0PpLXRqJ4qOjxmF/j6tZ6tqWp5ysqO3F5e/ZzmI5gkd6j9YXa0FJ/7G3"
-        crossorigin="anonymous"></script>
-
-        <script>
-    $(document).ready(function () {
-        var adminDropdown = $('#adminDropdown');
-        var subList = adminDropdown.next();
-        var contentContainer = $('#content-container');
-
-        adminDropdown.on('click', function () {
-            subList.toggleClass('show');
-        });
-
-        // Load initial content
-        // loadContent('customer_register.php');
-
-        // Function to load content dynamically
-        function loadContent(page) {
+      function loadContent(page) {
             $.ajax({
                 url: page,
                 type: 'GET',
                 dataType: 'html',
                 success: function (data) {
-                    contentContainer.html(data);
+                    var loadedContent = $('<div class="loaded-content"></div>').html(data);
+                    $('#content-container').html(loadedContent);
                 },
                 error: function (xhr, status, error) {
                     console.error('Error loading content:', error);
@@ -298,16 +187,25 @@ if (!isset($_SESSION["user"])) {
             });
         }
 
+        loadContent('customer_register.php');
+
         // Handle sidebar item clicks
-        $('.list-unstyled li a').on('click', function (event) {
+        $('.side-bar .menu .item a').on('click', function (event) {
             event.preventDefault();
             var page = $(this).attr('href');
             loadContent(page);
         });
     });
-</script>
-
-
-</body>
-
+    </script>
+<!-- 
+<style>
+    .loaded-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        text-align: center;
+    }
+</style> -->
+  </body>
 </html>

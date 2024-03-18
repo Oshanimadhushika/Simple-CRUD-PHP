@@ -118,7 +118,8 @@
                 <input type="text" class="form-control" id="search" placeholder="Search...">
             </div>
         </div>
-        <form id="customerRegistrationForm" action="customer_register.php" method="post">
+
+        <form id="customerRegistrationForm" action="customer_register.php" method="post" class="mt-3">
             <div class="row">
                 <div class="col-md-4">
                     <div class="mb-3">
@@ -216,8 +217,8 @@
                 <!-- ================================================================== -->
                 <div class="col-md-3">
                 <div class="mb-3">
-                        <label for="area" class="form-select">Area:</label>
-                        <select class="form-control" id="area" name="area">
+                        <label for="area" class="form-label">Area:</label>
+                        <select class="form-select" id="area" name="area">
                             <option>Main Street</option>
                             <option>City Center</option>
                             <option>Suburban Area</option>
